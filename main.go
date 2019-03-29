@@ -41,7 +41,8 @@ func interpretHandler(w http.ResponseWriter, r *http.Request) {
 		r.ParseForm()
 		program := r.FormValue("source")
 		message, err := compileProgram(program)
-		renderTemplate(w, "interpreter.html", map[string]interface{}{"Program": program, "Message": message, "Error": err})
+		message = strings.Replace(message, "\n", "\n<br />", -1)
+		renderTemplate(w, "interpreter.html", map[string]interface{}{"Program": program, "Message": template.HTML(message), "Error": err})
 	default:
 		renderTemplate(w, "interpreter.html", nil)
 	}
