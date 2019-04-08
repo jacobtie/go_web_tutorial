@@ -13,10 +13,11 @@ func renderTemplate(w http.ResponseWriter, filename string, data map[string]inte
 	t.ExecuteTemplate(w, "base", data)
 }
 
-// Helper function to forward any unknown routes to 404 page
+// Middleware to forward any unknown routes to 404 page
 func makeHandler(fn func(http.ResponseWriter, *http.Request), route string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		if len(r.URL.Path[len(route):]) > 1 {
+			log.Printf("GET %s not found, routing to 404", r.URL.Path[1:])
 			renderTemplate(w, "notfound.html", map[string]interface{}{"Route": r.URL.Path[1:]})
 			return
 		}
@@ -26,21 +27,30 @@ func makeHandler(fn func(http.ResponseWriter, *http.Request), route string) http
 
 // Renders home page
 func mainHandler(w http.ResponseWriter, r *http.Request) {
+	log.Println("GET index")
 	renderTemplate(w, "index.html", nil)
 }
 
 // Renders about page
 func aboutHandler(w http.ResponseWriter, r *http.Request) {
+	log.Println("GET about")
 	renderTemplate(w, "about.html", nil)
+}
+
+func faviconHandler(w http.ResponseWriter, r *http.Request) {
+	log.Println("GET favicon.ico")
+	http.ServeFile(w, r, "favicon.ico")
 }
 
 // Renders and handles interpreter page
 func interpretHandler(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodGet:
+		log.Println("GET interpret")
 		// Renders normal interpreter page
 		renderTemplate(w, "interpreter.html", nil)
 	case http.MethodPost:
+		log.Println("POST interpret")
 		// Parses data from form
 		r.ParseForm()
 		// Extracts source code
@@ -63,6 +73,8 @@ func main() {
 	http.HandleFunc("/", makeHandler(mainHandler, "/"))
 	http.HandleFunc("/about", makeHandler(aboutHandler, "/about"))
 	http.HandleFunc("/interpret", makeHandler(interpretHandler, "/interpret"))
+	http.HandleFunc("/favicon.ico", faviconHandler)
 	// Starts the server
+	log.Println("Starting server on port 8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
