@@ -64,12 +64,18 @@ func interpretHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// Handles favicon
+func iconHandler(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "favicon.ico")
+}
+
 // Entry point of the program
 func main() {
 	// Sets up static directory serve
 	fs := http.FileServer(http.Dir("static/"))
 	// Sets up routes
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
+	http.HandleFunc("/favicon.ico", iconHandler)
 	http.HandleFunc("/", makeHandler(mainHandler, "/"))
 	http.HandleFunc("/about", makeHandler(aboutHandler, "/about"))
 	http.HandleFunc("/interpret", makeHandler(interpretHandler, "/interpret"))
