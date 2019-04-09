@@ -16,6 +16,8 @@ func renderTemplate(w http.ResponseWriter, filename string, data map[string]inte
 // Middleware to forward any unknown routes to 404 page
 func makeHandler(fn func(http.ResponseWriter, *http.Request), route string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		// log.Println(route)
+		// log.Println(r.URL.Path)
 		if len(r.URL.Path[len(route):]) > 1 {
 			log.Printf("GET %s not found, routing to 404", r.URL.Path[1:])
 			renderTemplate(w, "notfound.html", map[string]interface{}{"Route": r.URL.Path[1:]})
@@ -35,11 +37,6 @@ func mainHandler(w http.ResponseWriter, r *http.Request) {
 func aboutHandler(w http.ResponseWriter, r *http.Request) {
 	log.Println("GET about")
 	renderTemplate(w, "about.html", nil)
-}
-
-func faviconHandler(w http.ResponseWriter, r *http.Request) {
-	log.Println("GET favicon.ico")
-	http.ServeFile(w, r, "favicon.ico")
 }
 
 // Renders and handles interpreter page
@@ -67,13 +64,21 @@ func interpretHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// Handles favicon
+func iconHandler(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "favicon.ico")
+}
+
 // Entry point of the program
 func main() {
+	// Sets up static directory serve
+	fs := http.FileServer(http.Dir("static/"))
 	// Sets up routes
+	http.Handle("/static/", http.StripPrefix("/static/", fs))
+	http.HandleFunc("/favicon.ico", iconHandler)
 	http.HandleFunc("/", makeHandler(mainHandler, "/"))
 	http.HandleFunc("/about", makeHandler(aboutHandler, "/about"))
 	http.HandleFunc("/interpret", makeHandler(interpretHandler, "/interpret"))
-	http.HandleFunc("/favicon.ico", faviconHandler)
 	// Starts the server
 	log.Println("Starting server on port 8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))
