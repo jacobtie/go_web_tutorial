@@ -4,16 +4,12 @@
 </header>
 <form action="/interpret" method="POST">
     <div class="form-group">
-        <textarea id="program-input" class="form-control form-control-sm text-info" style="height:40em" name="source" spellcheck="false">{{.Program}}</textarea>
+        <textarea id="program-input" class="form-control form-control-sm text-info" style="height:45vh" name="source" spellcheck="false">{{.Program}}</textarea>
         <input type="submit" value="Run" class="form-control btn-default mt-2" />
     </div>
 </form>
-<div class="container-fluid {{if .Error}}text-danger{{else}}text-dark{{end}}">
-    {{if .Message}}
-        {{.Message}}
-    {{else}}
-        <p>Output will appear here</p>
-    {{end}}
+<div class="container-fluid {{if .Error}}text-danger{{else}}text-dark{{end}} pre-scrollable mb-4", style="height:25vh;">
+    <samp>{{.Message}}</samp>
 </div>
 <script type="text/javascript">
     // Enables tab functionality in textarea
