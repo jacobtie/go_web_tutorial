@@ -2,12 +2,14 @@
 <header>
     <h1>Run Go Code Here</h1>
 </header>
+<div class="container-fluid">
 <form action="/interpret" method="POST">
     <div class="form-group">
         <textarea id="program-input" class="form-control form-control-sm text-info" style="height:45vh" name="source" spellcheck="false">{{.Program}}</textarea>
         <input type="submit" value="Run" class="form-control btn-default mt-2" />
     </div>
 </form>
+</div>
 <div class="container-fluid {{if .Error}}text-danger{{else}}text-dark{{end}} pre-scrollable mb-4", style="height:25vh;">
     <samp>{{.Message}}</samp>
 </div>
