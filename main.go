@@ -69,6 +69,11 @@ func iconHandler(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "favicon.ico")
 }
 
+// Handles info page
+func infoHandler(w http.ResponseWriter, r *http.Request) {
+	renderTemplate(w, "info.html", nil)
+}
+
 // Entry point of the program
 func main() {
 	// Sets up static directory serve
@@ -78,6 +83,7 @@ func main() {
 	http.HandleFunc("/favicon.ico", iconHandler)
 	http.HandleFunc("/", makeHandler(mainHandler, "/"))
 	http.HandleFunc("/about", makeHandler(aboutHandler, "/about"))
+	http.HandleFunc("/info", makeHandler(infoHandler, "/info"))
 	http.HandleFunc("/interpret", makeHandler(interpretHandler, "/interpret"))
 	// Starts the server
 	log.Println("Starting server on port 8080")
