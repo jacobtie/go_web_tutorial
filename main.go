@@ -4,6 +4,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"os"
 	"strings"
 )
 
@@ -87,6 +88,10 @@ func main() {
 	http.HandleFunc("/info", makeHandler(infoHandler, "/info"))
 	http.HandleFunc("/interpret", makeHandler(interpretHandler, "/interpret"))
 	// Starts the server
-	log.Println("Starting server on port 8080")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+	log.Printf("Starting server on port %s\n", port)
+	log.Fatal(http.ListenAndServe(":"+port, nil))
 }
