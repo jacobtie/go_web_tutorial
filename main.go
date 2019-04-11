@@ -51,14 +51,18 @@ func interpretHandler(w http.ResponseWriter, r *http.Request) {
 		log.Println("POST interpret")
 		// Parses data from form
 		r.ParseForm()
-		// Extracts source code
-		program := r.FormValue("source")
-		// Compiles and runs program with Google's endpoint to get output/error
-		message, err := compileProgram(program)
-		// Replaces line breaks in message with HTML line breaks
-		message = strings.Replace(message, "\n", "\n<br />", -1)
-		// Renders template with correct data
-		renderTemplate(w, "interpreter.html", map[string]interface{}{"Program": program, "Message": template.HTML(message), "Error": err})
+		if r.FormValue("sample") == "" {
+			// Extracts source code
+			program := r.FormValue("source")
+			// Compiles and runs program with Google's endpoint to get output/error
+			message, err := compileProgram(program)
+			// Replaces line breaks in message with HTML line breaks
+			message = strings.Replace(message, "\n", "\n<br />", -1)
+			// Renders template with correct data
+			renderTemplate(w, "interpreter.html", map[string]interface{}{"Program": program, "Message": template.HTML(message), "Error": err})
+		} else {
+			renderTemplate(w, "interpreter.html", map[string]interface{}{"Program": r.FormValue("sample")})
+		}
 	default:
 		// Renders normal interpreter page in case a different HTTP method is used
 		renderTemplate(w, "interpreter.html", nil)

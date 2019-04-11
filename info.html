@@ -61,10 +61,25 @@
           </div>
           <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
             <div class="card-body">
-              @TODO: Write links to sample Go programs that run in the interpreter
+              @TODO: Write links to sample Go programs that run in the interpreter<br />
+              <a href="#" onclick="post('output')">Click here for an output example!</a>
             </div>
           </div>
         </div>
       </div>
 </header>
+<script type="text/javascript">
+  function post(program) {
+    let form = document.createElement("form");
+    form.setAttribute("method", "post");
+    form.setAttribute("action", '/interpret');
+    let hiddenField = document.createElement("input");
+    hiddenField.setAttribute("type", "hidden");
+    hiddenField.setAttribute("name", "sample");
+    hiddenField.setAttribute("value", program);
+    form.appendChild(hiddenField);
+    document.body.appendChild(form);
+    form.submit();
+  }
+</script>
 {{end}}
