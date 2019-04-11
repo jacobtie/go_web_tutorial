@@ -71,6 +71,7 @@ func iconHandler(w http.ResponseWriter, r *http.Request) {
 
 // Handles info page
 func infoHandler(w http.ResponseWriter, r *http.Request) {
+	log.Println("GET info")
 	renderTemplate(w, "info.html", nil)
 }
 
