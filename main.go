@@ -2,6 +2,7 @@ package main
 
 import (
 	"html/template"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -61,7 +62,11 @@ func interpretHandler(w http.ResponseWriter, r *http.Request) {
 			// Renders template with correct data
 			renderTemplate(w, "interpreter.html", map[string]interface{}{"Program": program, "Message": template.HTML(message), "Error": err})
 		} else {
-			renderTemplate(w, "interpreter.html", map[string]interface{}{"Program": r.FormValue("sample")})
+			program, err := ioutil.ReadFile("samples/" + r.FormValue("sample") + ".go")
+			if err != nil {
+				log.Println(err)
+			}
+			renderTemplate(w, "interpreter.html", map[string]interface{}{"Program": string(program)})
 		}
 	default:
 		// Renders normal interpreter page in case a different HTTP method is used
