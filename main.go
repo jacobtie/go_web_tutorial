@@ -62,7 +62,7 @@ func interpretHandler(w http.ResponseWriter, r *http.Request) {
 			// Renders template with correct data
 			renderTemplate(w, "interpreter.html", map[string]interface{}{"Program": program, "Message": template.HTML(message), "Error": err})
 		} else {
-			program, err := ioutil.ReadFile("samples/" + r.FormValue("sample") + ".go")
+			program, err := ioutil.ReadFile("samples/" + r.FormValue("sample") + "/main" + ".go")
 			if err != nil {
 				log.Println(err)
 			}
