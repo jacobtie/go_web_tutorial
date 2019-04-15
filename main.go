@@ -92,7 +92,7 @@ func main() {
 	// Sets up routes
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 	http.HandleFunc("/favicon.ico", iconHandler)
-	http.HandleFunc("/", makeHandler(mainHandler, "/"))
+	http.HandleFunc("/", makeHandler(interpretHandler, "/"))
 	http.HandleFunc("/about", makeHandler(aboutHandler, "/about"))
 	http.HandleFunc("/info", makeHandler(infoHandler, "/info"))
 	http.HandleFunc("/interpret", makeHandler(interpretHandler, "/interpret"))
