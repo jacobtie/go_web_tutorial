@@ -37,6 +37,11 @@ func aboutHandler(w http.ResponseWriter, r *http.Request) {
 	renderTemplate(w, "about.html", nil)
 }
 
+func infoHandler(w http.ResponseWriter, r *http.Request) {
+	log.Println("GET info")
+	renderTemplate(w, "info.html", nil)
+}
+
 func faviconHandler(w http.ResponseWriter, r *http.Request) {
 	log.Println("GET favicon.ico")
 	http.ServeFile(w, r, "favicon.ico")
@@ -73,6 +78,7 @@ func main() {
 	http.HandleFunc("/", makeHandler(mainHandler, "/"))
 	http.HandleFunc("/about", makeHandler(aboutHandler, "/about"))
 	http.HandleFunc("/interpret", makeHandler(interpretHandler, "/interpret"))
+	http.HandleFunc("/info", makeHandler(infoHandler, "/info"))
 	http.HandleFunc("/favicon.ico", faviconHandler)
 	// Starts the server
 	log.Println("Starting server on port 8080")
