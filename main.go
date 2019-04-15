@@ -89,6 +89,9 @@ func infoHandler(w http.ResponseWriter, r *http.Request) {
 func main() {
 	// Sets up static directory serve
 	fs := http.FileServer(http.Dir("static/"))
+
+	// Initialize database
+
 	// Sets up routes
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 	http.HandleFunc("/favicon.ico", iconHandler)

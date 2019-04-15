@@ -7,6 +7,8 @@
     <div class="form-group">
         <textarea id="program-input" class="form-control form-control-sm text-info" style="height:45vh" name="source" spellcheck="false">{{.Program}}</textarea>
         <input type="submit" value="Run" class="form-control btn-default mt-2" />
+        <br>
+        <input id="save" type="button" value="Save" class="form-control btn-success btn-block"/>
     </div>
 </form>
 </div>
@@ -24,5 +26,9 @@
                 this.selectionEnd = s+1; 
             }
         }
+
+    document.getElementById("save").onclick = function(){
+        alert("save button test");
+    }
 </script>
 {{end}}
