@@ -1,7 +1,6 @@
 body {
     background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSeIfCTRektfRkfwy-P-XhLON05jQPdgLunK7zfcXTVvyvlZnKs_Q");
     background-repeat: repeat;
-    
 }
 
 .gopher{
@@ -9,3 +8,15 @@ body {
     float: right;
     width: 20%;
 }
+
+.card-header .btn {
+    text-decoration: none;
+    color: cornflowerblue;
+}
+
+.card-header .btn[aria-expanded="true"] {
+    color: black;
+    font-size: larger;
+    text-decoration: none;
+}
+

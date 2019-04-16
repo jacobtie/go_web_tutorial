@@ -1,16 +1,18 @@
 {{define "content"}}
+<head>
+    <link rel="stylesheet" href="/static/css/base-css.css">
+</head>
 <header class="page-header">
     <h1>Go Info</h1>
     <div id="accordion">
         <div class="card">
-          <div class="card-header" id="headingOne">
+          <div class="card-header" id="headingOne" aria-expanded="true" >
             <h5 class="mb-0">
-              <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+              <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                 Introduction
               </button>
             </h5>
           </div>
-      
           <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
             <div class="card-body">
                 <p>
