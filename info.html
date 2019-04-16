@@ -1,0 +1,148 @@
+{{define "content"}}
+<header class="page-header">
+    <h1>Go Info</h1>
+    <div id="accordion">
+        <div class="card">
+          <div class="card-header" id="headingOne">
+            <h5 class="mb-0">
+              <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                Introduction
+              </button>
+            </h5>
+          </div>
+      
+          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="card-body">
+                <p>
+                    Go is an open source language created by engineers from Google. 
+                    The language was created by Robert Griesemer, Ken Thompson, and Rob Pike. 
+                    Go is a compiled, statically typed, and supports garbage collection and concurrency. 
+                    What makes Go different, is that it was built to be intuitive to develop in, run for the web, and be efficient. 
+                </p>
+                <p>
+                    Go is partially object-oriented. It does not have classes and objects in the traditional sense, but instead utilizes a user
+                    defined type system, in which developers define complex data types. Functions can be created and bound implicitly to these types 
+                    so that they function similar to how objects work in other object-oriented languages. Developers define types using the <code>type</code>
+                    keyword. A working example of a Go Binary Search Tree as an object can be found 
+                    <a href="https://github.com/jacobtie/go_binary_search_tree" target="_blank">here on GitHub</a>. Users may also implement and define interfaces
+                    which function similarly to interfaces in other languages. 
+                </p>
+                <p>
+                    Go implements parallelism through goroutines. A goroutine fulfills two of the main goals of the Go programming language, those 
+                    being ease in development and efficiency. Goroutines are incredibly easy to implement; the developer must only write the word 
+                    <code>go</code> in front of a function call or an anonymous function. 
+                </p>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="headingTwo">
+            <h5 class="mb-0">
+              <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                History of Go
+              </button>
+            </h5>
+          </div>
+          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+            <div class="card-body">
+              <p>
+                Go was first thought into existence in 2007 by three Google employees, Robert Griesemer, Rob Pike, and Ken Thompson.
+                These three Googlers started designing Go that same year. The primary motivation these three Googlers had for creating Go was
+                their complete dislike of C++. Seemingly fueled by their mutual hatred of C++, the Googlers made Go open-source in 2009, and version 1.0
+                was released in 2012.
+              </p>
+              <p>
+                Go was primarily created in order to merge the best parts of multiple programming languages into one, while leaving out
+                the bad parts. Some languages are compiled and fast, like C, but they are unsafe, hard to work with, and can suffer from many runtime errors.
+                Other languages are interpreted, like Ruby. These languages are typically safer but are also slower and have many dependencies.
+                Then you have other languages like Java that require a virtual machine, JVM, in order to run the code, which can make porting the
+                code between different machines unreliable at times.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="headingThree">
+            <h5 class="mb-0">
+              <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                What is Go used for?
+              </button>
+            </h5>
+          </div>
+          <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+            <div class="card-body">
+              <p>
+                Go in a general purpose programming language, meaning that it can be used for pretty much anything. However, there are a few things that
+                Go is great for and some things that Go is not very good for.
+                <br>Go is great for:
+                <ul>
+                  <li>Command-line apps/scripts.</li>
+                  <li>Machine learning.</li>
+                  <li>Automation.</li>
+                  <li>Networking.</li>
+                  <li>Web servers.</li>
+                </ul>
+                Go is not so good for:
+                <ul>
+                  <li>Desktop/GUI based apps.</li>
+                  <li>System level programming.</li>
+                </ul>
+              </p>
+            <p>
+              The creators of Go have worked very hard in order to remove these drawbacks.
+              <br>Go is:
+              <ul>
+                <li>Fast - Go has very fast compilation that you will barely notice.</li>
+                <li>Safe - Go strongly typed, statically typed, and has a garbage collector.</li>
+                <li>Easy - Go prides itself on being concise and explicit.</li>
+                <li>Modern - Has built-in support for many different kinds of applications.</li>
+              </ul>
+              The creators of Go even have idioms for their language:
+              <ul>
+                <li>Get the job done.</li>
+                <li>One way of doing things.</li>
+                <li>Be explicit.</li>
+                <li>Build things by composing them.</li>
+              </ul>
+              For all of these reasons, and more, Go has been increasing in popularity over the years, and it does not show any signs of slowing down.
+            </p>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="headingFour">
+            <h5 class="mb-0">
+              <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                Go Syntax Examples
+              </button>
+            </h5>
+          </div>
+          <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+            <div class="card-body">
+              <p>
+                <ul>
+                  <li><a href="#" onclick="post('output')">Click here for an output sample!</a></li>
+                  <li><a href="#" onclick="post('if')">Click here for an if statement sample!</a></li>
+                  <li><a href="#" onclick="post('bst')">Click here for a binary search tree sample!</a></li>
+                </ul>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+</header>
+<script type="text/javascript">
+  function post(program) {
+    let form = document.createElement("form");
+    form.setAttribute("method", "post");
+    form.setAttribute("action", '/interpret');
+    let hiddenField = document.createElement("input");
+    hiddenField.setAttribute("type", "hidden");
+    hiddenField.setAttribute("name", "sample");
+    hiddenField.setAttribute("value", program);
+    form.appendChild(hiddenField);
+    document.body.appendChild(form);
+    form.submit();
+  }
+</script>
+{{end}}
