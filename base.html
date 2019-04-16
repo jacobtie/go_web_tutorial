@@ -10,8 +10,11 @@
 </head>
 <body style="background-color: black">
     <div class="container" style="display:flex;flex-flow:column;height:100vh">
-        <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-            <a class="navbar-brand" href="gopher.png">GoCeption</a>
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">
+                <img src="static/gopher.png" width="50" height="50" >
+                GoCeption
+            </a>
             <!-- Toggler/collapsibe Button -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
                 <span class="navbar-toggler-icon"></span>
@@ -19,13 +22,16 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/">Home</span></a>
+                        <a class="nav-link" href="/">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/about">About</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/info">Go Info</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/library">Code Library</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/interpret">Interpret Code</a>
@@ -43,6 +49,34 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        function post(program) {
+            let form = document.createElement("form");
+            form.setAttribute("method", "post");
+            form.setAttribute("action", '/interpret');
+            let hiddenField = document.createElement("input");
+            hiddenField.setAttribute("type", "hidden");
+            hiddenField.setAttribute("name", "sample");
+            hiddenField.setAttribute("value", program);
+            form.appendChild(hiddenField);
+            document.body.appendChild(form);
+            form.submit();
+        }
+        // Enables tab functionality in textarea
+        let textarea = document.getElementById('program-input');
+        textarea.onkeydown = function(e) {
+            if(e.keyCode==9 || e.which==9){
+                e.preventDefault();
+                let s = this.selectionStart;
+                this.value = this.value.substring(0,this.selectionStart) + "\t" + this.value.substring(this.selectionEnd);
+                this.selectionEnd = s+1;
+            }
+        }
+
+        document.getElementById("save").onclick = function(){
+            alert("save button test");
+        }
+    </script>
 </body>
 </html>
 {{end}}

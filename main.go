@@ -85,13 +85,16 @@ func infoHandler(w http.ResponseWriter, r *http.Request) {
 	renderTemplate(w, "info.html", nil)
 }
 
+// Handles code libary page
+func libraryHandler(w http.ResponseWriter, r *http.Request) {
+	log.Println("GET libary")
+	renderTemplate(w, "library.html", nil)
+}
+
 // Entry point of the program
 func main() {
 	// Sets up static directory serve
 	fs := http.FileServer(http.Dir("static/"))
-
-	// Initialize database
-
 	// Sets up routes
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 	http.HandleFunc("/favicon.ico", iconHandler)
@@ -99,6 +102,7 @@ func main() {
 	http.HandleFunc("/about", makeHandler(aboutHandler, "/about"))
 	http.HandleFunc("/info", makeHandler(infoHandler, "/info"))
 	http.HandleFunc("/interpret", makeHandler(interpretHandler, "/interpret"))
+	http.HandleFunc("/library", makeHandler(libraryHandler, "/library"))
 	// Starts the server
 	port := os.Getenv("PORT")
 	if port == "" {

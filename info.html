@@ -109,40 +109,6 @@
             </div>
           </div>
         </div>
-        <div class="card">
-          <div class="card-header" id="headingFour">
-            <h5 class="mb-0">
-              <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                Go Syntax Examples
-              </button>
-            </h5>
-          </div>
-          <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
-            <div class="card-body">
-              <p>
-                @TODO: Write documentation about output to go with sample program<br />
-                <a href="#" onclick="post('output')">Click here for an output sample!</a>
-                <a href="#" onclick="post('if')">Click here for an if statement sample!</a>
-                <a href="#" onclick="post('bst')">Click here for a binary search tree sample!</a>
-              </p>
-              @TODO: Write more sample Go programs that run in the interpreter
-            </div>
-          </div>
-        </div>
       </div>
 </header>
-<script type="text/javascript">
-  function post(program) {
-    let form = document.createElement("form");
-    form.setAttribute("method", "post");
-    form.setAttribute("action", '/interpret');
-    let hiddenField = document.createElement("input");
-    hiddenField.setAttribute("type", "hidden");
-    hiddenField.setAttribute("name", "sample");
-    hiddenField.setAttribute("value", program);
-    form.appendChild(hiddenField);
-    document.body.appendChild(form);
-    form.submit();
-  }
-</script>
 {{end}}
