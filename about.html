@@ -1,8 +1,45 @@
 {{define "content"}}
 <h1>About</h1>
-<p>This is a sample about page. There is a main and about page. If you go to a route which does not exist, such as by 
-    <a href="/sample1">by clicking here</a>, you will be met with a 404 page. This 404 page accepts the name of the route
-    as a variable, which you can see change on the page depending on the route you go to. For example,
-    <a href="/sample2">by clicking here</a> you will see the same 404 page but with different text based on the route name.</p>
-    <p>This functionality will also work if you go to a subroute which does not exist, such as by <a href="/about/sample">clicking here</a>.</p>
+<div class="mt-4">
+    <p>
+        This is a Website of Go, by Go, for Go. 
+    </p>
+    <p>
+        The name of the website, GoCeption, is a direct relation to what the purpose of this website is for.
+        Our team built GoCeption so that you can learn Go through Go. 
+        Our interpreter will let you run basic Go code and see output so that you can practice your Go skills! 
+        You can also take a look at the <a href="/info">Go Info page</a> to see sample programs and modify them yourself. 
+    </p>
+    <p>
+        We bet you were wondering what makes this website written in Go. 
+        All that you can see here is HTML, CSS, and a little bit of JavaScript. 
+        Well it turns out that the back end of this website is written in pure Go.
+        This means that no frameworks and no packages were used in this implemenation. That is the power of Go.  
+        This back end lives on Heroku's servers and renders our Go templates to create our finished HTML, CSS, and JS that we deliver to your browser! 
+    </p>
+    <p>
+        There are two main parts of our Go backend. The first part concerns handling all the requests from your browers. 
+        Our <code>main.go</code> file uses the <code>net/http</code> package native to Go to handle different routes and send them to their handlers. 
+        Before being sent to the handlers, the request is run through middleware and checked to see that the path actually exists. 
+        When the path is verified, the request information is sent to the proper handler, the data is processed, and the data is sent to the template. 
+        Should the path does not exist, a 404 page will be displayed. <a href="/badpath">Check out an example here!</a>
+        The template takes in the data and uses it to render the HTML, CSS, and JavaScript. After being rendered, the server sends a response
+        to your browser with the rendered page. 
+    </p>
+    <p>
+        The second main functionality of our backend is to handle your sample program from your interpreter. 
+        When you click "Run" your source code will be sent to our Go backend via a POST request. 
+        Your code is then sent to an API endpoint provided by Google located at 
+        <a href="https://golang.org/compile" target="_blank">https://golang.org/compile</a> with another POST request.
+        This endpoint is run by Google. They compile it and send back either output or an error message. 
+        That information is then processed by our handler, sent to the template, and rendered. 
+    </p>
+    <p>
+        This website was created by <a href="https://github.com/jacobtie" target="_blank">Jacob Kedar Krevat</a>, 
+        <a href="https://github.com/robertcapo" target="_blank">Robert Capo</a>, 
+        <a href="https://github.com/Ghall212" target="_blank">George Hall</a>, 
+        and <a href="https://github.com/yingwang131" target="_blank">Ying Wang</a> as our final project
+        for ITCS 5102 Survey of Programming Languages at UNC Charlotte. 
+    </p>
+</div>
 {{end}}
