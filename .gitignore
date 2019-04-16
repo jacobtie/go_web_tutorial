@@ -1,5 +1,4 @@
 goception
 
-#ignore idea files
 .idea/
 *.exe

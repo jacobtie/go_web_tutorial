@@ -109,7 +109,7 @@ func main() {
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 	http.Handle("/samples/", http.StripPrefix("/samples/", ps))
 	http.HandleFunc("/favicon.ico", iconHandler)
-	http.HandleFunc("/", makeHandler(mainHandler, "/"))
+	http.HandleFunc("/", makeHandler(interpretHandler, "/"))
 	http.HandleFunc("/about", makeHandler(aboutHandler, "/about"))
 	http.HandleFunc("/info", makeHandler(infoHandler, "/info"))
 	http.HandleFunc("/interpret", makeHandler(interpretHandler, "/interpret"))
