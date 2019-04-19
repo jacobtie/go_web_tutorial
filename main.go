@@ -18,8 +18,6 @@ func renderTemplate(w http.ResponseWriter, filename string, data map[string]inte
 // Middleware to forward any unknown routes to 404 page
 func makeHandler(fn func(http.ResponseWriter, *http.Request), route string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		// log.Println(route)
-		// log.Println(r.URL.Path)
 		if len(r.URL.Path[len(route):]) > 1 {
 			log.Printf("GET %s not found, routing to 404", r.URL.Path[1:])
 			renderTemplate(w, "notfound.html", map[string]interface{}{"Route": r.URL.Path[1:]})
@@ -97,7 +95,6 @@ func infoHandler(w http.ResponseWriter, r *http.Request) {
 // Handles code library page
 func libraryHandler(w http.ResponseWriter, r *http.Request) {
 	log.Println("GET libary")
-	// programList := []string{"if", "output", "bst"}
 	programList := make([]string, 0)
 	files, err := ioutil.ReadDir("./samples")
 	if err != nil {
