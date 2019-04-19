@@ -63,12 +63,21 @@ func interpretHandler(w http.ResponseWriter, r *http.Request) {
 			path := "samples/" + r.FormValue("filename") + "/"
 			user := []byte(r.FormValue("user"))
 			desc := []byte(r.FormValue("desc"))
+			if path == "samples//" {
+				path = "samples/no_name/"
+			}
+			if len(user) < 1 {
+				user = []byte("no_user")
+			}
+			if len(desc) < 1 {
+				desc = []byte("no_desc")
+			}
 			os.Mkdir(path, 0)
 			ioutil.WriteFile(path+"main.go", program, 0)
 			ioutil.WriteFile(path+"User", user, 0)
 			ioutil.WriteFile(path+"Desc", desc, 0)
 			log.Println("Files Saved: " + path)
-			renderTemplate(w, "interpreter.html", map[string]interface{}{"Program": string(program)})
+			//renderTemplate(w, "interpreter.html", map[string]interface{}{"Program": string(program)})
 		}
 		if r.FormValue("sample") == "" {
 			// Extracts source code

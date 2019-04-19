@@ -23,5 +23,48 @@ body {
 #output {
     height: 25vh;
     outline: 1px solid lightgrey;
-    font-family: Consolas;
+    font-family: Consolas, serif;
 }
+
+#prog-name {
+    font-weight: bold;
+    margin-right: 10px;
+    width: 100px;
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: cornflowerblue;
+}
+
+#prog-desc {
+    font-weight: normal;
+    /*text-overflow: ellipsis;*/
+    /*white-space: nowrap;*/
+    /*overflow: hidden;*/
+    margin-right: 50px;
+    width: 500px;
+    color: dimgray;
+}
+
+#prog-user {
+    max-width: 75px;
+}
+
+#prog-row > * {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+#prog-row > *:hover{
+    overflow: visible;
+    text-wrap: normal;
+    white-space: normal;
+    word-break: break-all;
+}
+
+#prog-row:hover {
+    background-color: #cee8fd;
+}
+
+

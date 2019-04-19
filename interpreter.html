@@ -10,9 +10,8 @@
                           placeholder="Enter your Go source code here then click the Run button" style="height:45vh"
                           name="source" spellcheck="false">{{.Program}}</textarea>
 
-                <input type="submit" name="submit" value="Run" class="form-control btn-success mt-2"/>
-                <input class="form-control mt-2 btn-danger" type="button" value="Clear" onclick=resetForm()>
-
+                <input id="run" type="submit" name="submit" value="Run" class="form-control btn-success mt-2"/>
+                <input id="clear" class="form-control mt-2 btn-danger" type="button" value="Clear" onclick=resetForm()>
                 <br>
                 <div id="output" class="container-fluid {{if .Error}}text-danger{{else}}text-dark{{end}} pre-scrollable mb-4">
                     {{.Message}}
@@ -44,7 +43,7 @@
         function resetForm()
         {
             document.getElementById("program-input").value = "";
-
+            document.getElementById("clear").blur();
         }
 
 
