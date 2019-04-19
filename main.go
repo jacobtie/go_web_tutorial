@@ -105,10 +105,20 @@ func libraryHandler(w http.ResponseWriter, r *http.Request) {
 	programList := make([]Program, 0)
 	files, err := ioutil.ReadDir("./samples")
 	if err != nil {
-		panic("Reading samples directory caused error")
+		panic(err)
 	}
 	for _, f := range files {
-		programList = append(programList, Program{f.Name(), "Username", "Description"})
+		path := "samples/" + f.Name() + "/"
+		name := f.Name()
+		user, err := ioutil.ReadFile(path + "User")
+		if err != nil {
+			panic(err)
+		}
+		desc, err := ioutil.ReadFile(path + "Desc")
+		if err != nil {
+			panic(err)
+		}
+		programList = append(programList, Program{name, string(user), string(desc)})
 	}
 	renderTemplate(w, "library.html", map[string]interface{}{"programList": programList})
 }
