@@ -76,8 +76,6 @@ func interpretHandler(w http.ResponseWriter, r *http.Request) {
 			ioutil.WriteFile(path+"main.go", program, 0777)
 			ioutil.WriteFile(path+"User", user, 0777)
 			ioutil.WriteFile(path+"Desc", desc, 0777)
-			// os.Chmod(path+"User", 0777)
-			// os.Chmod(path+"Desc", 0777)
 			log.Println("Files Saved: " + path)
 			//renderTemplate(w, "interpreter.html", map[string]interface{}{"Program": string(program)})
 		}
@@ -136,7 +134,6 @@ func libraryHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		programList = append(programList, Program{name, string(user), string(desc)})
-		// programList = append(programList, Program{name, "User", "Desc"})
 	}
 	renderTemplate(w, "library.html", map[string]interface{}{"programList": programList})
 }
