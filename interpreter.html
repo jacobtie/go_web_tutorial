@@ -13,10 +13,12 @@
                 <br>
                 <input type="text" name="filename" class="form-control" placeholder="Name your program">
                 <br>
+                <!--
                 <input type="text" name="desc" class="form-control" placeholder="Describe your program">
                 <br>
                 <input type="text" name="user" class="form-control" placeholder="Enter your name">
                 <br>
+                -->
                 <input id="save" type="submit" name="submit" value="Save" class="form-control btn-primary btn-block"/>
             </div>
         </form>
@@ -25,4 +27,16 @@
          style="height:25vh;">
         <samp>{{.Message}}</samp>
     </div>
+    <script type="text/javascript">
+    // Enables tab functionality in textarea
+        let textarea = document.getElementById('program-input');
+        textarea.onkeydown = function(e) {
+            if(e.keyCode==9 || e.which==9){
+                e.preventDefault();
+                let s = this.selectionStart;
+                this.value = this.value.substring(0,this.selectionStart) + "\t" + this.value.substring(this.selectionEnd);
+                this.selectionEnd = s+1;
+            }
+        }
+    </script>
 {{end}}

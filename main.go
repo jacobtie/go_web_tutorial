@@ -18,8 +18,6 @@ func renderTemplate(w http.ResponseWriter, filename string, data map[string]inte
 // Middleware to forward any unknown routes to 404 page
 func makeHandler(fn func(http.ResponseWriter, *http.Request), route string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		// log.Println(route)
-		// log.Println(r.URL.Path)
 		if len(r.URL.Path[len(route):]) > 1 {
 			log.Printf("GET %s not found, routing to 404", r.URL.Path[1:])
 			renderTemplate(w, "notfound.html", map[string]interface{}{"Route": r.URL.Path[1:]})
@@ -57,7 +55,7 @@ func interpretHandler(w http.ResponseWriter, r *http.Request) {
 			program := []byte(r.FormValue("source"))
 			path := "samples/" + r.FormValue("filename")
 			os.Mkdir(path, 0)
-			ioutil.WriteFile(path + "/main.go", program, 0)
+			ioutil.WriteFile(path+"/main.go", program, 0)
 			log.Println("File Saved: " + path)
 			renderTemplate(w, "interpreter.html", map[string]interface{}{"Program": string(program)})
 		}
@@ -97,7 +95,15 @@ func infoHandler(w http.ResponseWriter, r *http.Request) {
 // Handles code library page
 func libraryHandler(w http.ResponseWriter, r *http.Request) {
 	log.Println("GET libary")
-	renderTemplate(w, "library.html", nil)
+	programList := make([]string, 0)
+	files, err := ioutil.ReadDir("./samples")
+	if err != nil {
+		panic("Reading samples directory caused error")
+	}
+	for _, f := range files {
+		programList = append(programList, f.Name())
+	}
+	renderTemplate(w, "library.html", map[string]interface{}{"programList": programList})
 }
 
 // Entry point of the program

@@ -11,43 +11,20 @@
     <h6>Click on a program description to view it in the interpreter</h6>
 
     <div id="programList" class="list-group" role="tablist">
-        <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center text-primary" onclick="post('output')">
-            Output Sample
-            <span class="badge badge-secondary">Jacob</span>
+    {{range $i, $program := .programList}}
+        <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center text-primary" onclick="post('{{$program}}')">
+            {{$program}} Sample
+            <!--<span class="badge badge-secondary">Name</span>-->
         </a>
-        <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center text-primary" onclick="post('if')">
-            If Statement Sample
-            <span class="badge badge-secondary">Jacob</span>
-        </a>
-        <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center text-primary" onclick="post('bst')">
-            Binary Search Tree Sample
-            <span class="badge badge-secondary">Jacob</span>
-        </a>
+    {{else}}
+        <!--This should never run-->
+        No programs available
+    {{end}}
     </div>
 {{/*    <a href="#" onclick="post('output')">Click here for an output sample!</a>*/}}
 {{/*    <a href="#" onclick="post('if')">Click here for an if statement sample!</a>*/}}
 {{/*    <a href="#" onclick="post('bst')">Click here for a binary search tree sample!</a>*/}}
 </div>
 </body>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-
-<script>
-    // ajax call to parse files in directory
-    $.ajax({
-        url: "/samples",
-        success: function(result) {
-
-        }
-    });
-    $(function() {
-      // get description
-      // get author
-
-      var link = $("<a></a>").text("
-        $("programList").append(
-
-        );
-    });
-</script>
 </html>
 {{end}}
