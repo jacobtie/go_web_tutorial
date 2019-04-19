@@ -9,8 +9,16 @@
                 <textarea id="program-input" class="form-control form-control-sm text-info"
                           placeholder="Enter your Go source code here then click the Run button" style="height:45vh"
                           name="source" spellcheck="false">{{.Program}}</textarea>
+
                 <input type="submit" name="submit" value="Run" class="form-control btn-success mt-2"/>
+                <input class="form-control mt-2 btn-danger" type="button" value="Clear" onclick=resetForm()>
+
                 <br>
+                <div id="output" class="container-fluid {{if .Error}}text-danger{{else}}text-dark{{end}} pre-scrollable mb-4">
+                    {{.Message}}
+                </div>
+                <br>
+                <h6>Save Your Program to the Code Library</h6>
                 <input type="text" name="filename" class="form-control" placeholder="Name your program">
                 <br>
                 <!--
@@ -23,10 +31,6 @@
             </div>
         </form>
     </div>
-    <div class="container-fluid {{if .Error}}text-danger{{else}}text-dark{{end}} pre-scrollable mb-4" ,
-         style="height:25vh;">
-        <samp>{{.Message}}</samp>
-    </div>
     <script type="text/javascript">
     // Enables tab functionality in textarea
         let textarea = document.getElementById('program-input');
@@ -38,5 +42,13 @@
                 this.selectionEnd = s+1;
             }
         }
+
+        function resetForm()
+        {
+            document.getElementById("program-input").value = "";
+
+        }
+
+
     </script>
 {{end}}

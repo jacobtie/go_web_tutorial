@@ -20,3 +20,8 @@ body {
     text-decoration: none;
 }
 
+#output {
+    height: 25vh;
+    outline: 1px solid lightgrey;
+    font-family: Consolas;
+}
