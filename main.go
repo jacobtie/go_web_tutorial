@@ -9,6 +9,13 @@ import (
 	"strings"
 )
 
+// Program holds a program's metadata for library
+type Program struct {
+	Name string
+	User string
+	Desc string
+}
+
 // Helper function to render template with base layout
 func renderTemplate(w http.ResponseWriter, filename string, data map[string]interface{}) {
 	t, _ := template.ParseFiles("base.html", filename)
@@ -95,13 +102,13 @@ func infoHandler(w http.ResponseWriter, r *http.Request) {
 // Handles code library page
 func libraryHandler(w http.ResponseWriter, r *http.Request) {
 	log.Println("GET libary")
-	programList := make([]string, 0)
+	programList := make([]Program, 0)
 	files, err := ioutil.ReadDir("./samples")
 	if err != nil {
 		panic("Reading samples directory caused error")
 	}
 	for _, f := range files {
-		programList = append(programList, f.Name())
+		programList = append(programList, Program{f.Name(), "Username", "Description"})
 	}
 	renderTemplate(w, "library.html", map[string]interface{}{"programList": programList})
 }

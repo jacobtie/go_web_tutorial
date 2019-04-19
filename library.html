@@ -11,19 +11,16 @@
     <h6>Click on a program description to view it in the interpreter</h6>
 
     <div id="programList" class="list-group" role="tablist">
-    {{range $i, $program := .programList}}
-        <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center text-primary" onclick="post('{{$program}}')">
-            {{$program}} Sample
-            <!--<span class="badge badge-secondary">Name</span>-->
+    {{range .programList}}
+        <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center text-primary" onclick="post('{{.Name}}')">
+            {{.Name}} Sample
+            <!--<span class="badge badge-secondary">{{.User}}</span>-->
         </a>
     {{else}}
         <!--This should never run-->
         No programs available
     {{end}}
     </div>
-{{/*    <a href="#" onclick="post('output')">Click here for an output sample!</a>*/}}
-{{/*    <a href="#" onclick="post('if')">Click here for an if statement sample!</a>*/}}
-{{/*    <a href="#" onclick="post('bst')">Click here for a binary search tree sample!</a>*/}}
 </div>
 </body>
 </html>
