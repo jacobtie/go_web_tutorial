@@ -72,12 +72,10 @@ func interpretHandler(w http.ResponseWriter, r *http.Request) {
 			if len(desc) < 1 {
 				desc = []byte("no_desc")
 			}
-			os.Mkdir(path, 0)
-			ioutil.WriteFile(path+"main.go", program, 0)
-			ioutil.WriteFile(path+"User", user, 0)
-			ioutil.WriteFile(path+"Desc", desc, 0)
-			os.Chmod(path+"User", 0777)
-			os.Chmod(path+"Desc", 0777)
+			os.Mkdir(path, 0777)
+			ioutil.WriteFile(path+"main.go", program, 0777)
+			ioutil.WriteFile(path+"User", user, 0777)
+			ioutil.WriteFile(path+"Desc", desc, 0777)
 			log.Println("Files Saved: " + path)
 			//renderTemplate(w, "interpreter.html", map[string]interface{}{"Program": string(program)})
 		}
@@ -125,6 +123,7 @@ func libraryHandler(w http.ResponseWriter, r *http.Request) {
 	for _, f := range files {
 		path := "samples/" + f.Name() + "/"
 		name := f.Name()
+
 		user, err := ioutil.ReadFile(path + "User")
 		if err != nil {
 			panic(err)
@@ -133,6 +132,7 @@ func libraryHandler(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			panic(err)
 		}
+
 		programList = append(programList, Program{name, string(user), string(desc)})
 	}
 	renderTemplate(w, "library.html", map[string]interface{}{"programList": programList})
