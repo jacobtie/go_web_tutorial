@@ -60,10 +60,14 @@ func interpretHandler(w http.ResponseWriter, r *http.Request) {
 		// Saves form entry to file
 		if r.FormValue("submit") == "Save" {
 			program := []byte(r.FormValue("source"))
-			path := "samples/" + r.FormValue("filename")
+			path := "samples/" + r.FormValue("filename") + "/"
+			user := []byte(r.FormValue("user"))
+			desc := []byte(r.FormValue("desc"))
 			os.Mkdir(path, 0)
-			ioutil.WriteFile(path+"/main.go", program, 0)
-			log.Println("File Saved: " + path)
+			ioutil.WriteFile(path+"main.go", program, 0)
+			ioutil.WriteFile(path+"User", user, 0)
+			ioutil.WriteFile(path+"Desc", desc, 0)
+			log.Println("Files Saved: " + path)
 			renderTemplate(w, "interpreter.html", map[string]interface{}{"Program": string(program)})
 		}
 		if r.FormValue("sample") == "" {
