@@ -1,0 +1,28 @@
+{{define "content"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container-fluid">
+    <h1>Code Library</h1>
+    <h6>Click on a program description to view it in the interpreter</h6>
+
+    <div id="programList" class="list-group" role="tablist">
+    {{range .programList}}
+        <a id="prog-row" href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center text-primary" onclick="post('{{.Name}}')">
+            <span id="prog-name">{{.Name}}</span>
+            <span id="prog-desc">{{.Desc}}</span>
+            <span id="prog-user" class="badge badge-secondary">{{.User}}</span>
+        </a>
+    {{else}}
+        <!--This should never run-->
+        No programs available
+    {{end}}
+    </div>
+</div>
+</body>
+</html>
+{{end}}

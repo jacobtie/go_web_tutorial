@@ -9,6 +9,13 @@ import (
 	"strings"
 )
 
+// Program holds a program's metadata for library
+type Program struct {
+	Name string
+	User string
+	Desc string
+}
+
 // Helper function to render template with base layout
 func renderTemplate(w http.ResponseWriter, filename string, data map[string]interface{}) {
 	t, _ := template.ParseFiles("base.html", filename)
@@ -18,8 +25,6 @@ func renderTemplate(w http.ResponseWriter, filename string, data map[string]inte
 // Middleware to forward any unknown routes to 404 page
 func makeHandler(fn func(http.ResponseWriter, *http.Request), route string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		// log.Println(route)
-		// log.Println(r.URL.Path)
 		if len(r.URL.Path[len(route):]) > 1 {
 			log.Printf("GET %s not found, routing to 404", r.URL.Path[1:])
 			renderTemplate(w, "notfound.html", map[string]interface{}{"Route": r.URL.Path[1:]})
@@ -52,6 +57,28 @@ func interpretHandler(w http.ResponseWriter, r *http.Request) {
 		log.Println("POST interpret")
 		// Parses data from form
 		r.ParseForm()
+		// Saves form entry to file
+		if r.FormValue("submit") == "Save" {
+			program := []byte(r.FormValue("source"))
+			path := "samples/" + r.FormValue("filename") + "/"
+			user := []byte(r.FormValue("user"))
+			desc := []byte(r.FormValue("desc"))
+			if path == "samples//" {
+				path = "samples/no_name/"
+			}
+			if len(user) < 1 {
+				user = []byte("no_user")
+			}
+			if len(desc) < 1 {
+				desc = []byte("no_desc")
+			}
+			os.Mkdir(path, 0)
+			ioutil.WriteFile(path+"main.go", program, 0)
+			ioutil.WriteFile(path+"User", user, 0)
+			ioutil.WriteFile(path+"Desc", desc, 0)
+			log.Println("Files Saved: " + path)
+			//renderTemplate(w, "interpreter.html", map[string]interface{}{"Program": string(program)})
+		}
 		if r.FormValue("sample") == "" {
 			// Extracts source code
 			program := r.FormValue("source")
@@ -85,17 +112,44 @@ func infoHandler(w http.ResponseWriter, r *http.Request) {
 	renderTemplate(w, "info.html", nil)
 }
 
+// Handles code library page
+func libraryHandler(w http.ResponseWriter, r *http.Request) {
+	log.Println("GET libary")
+	programList := make([]Program, 0)
+	files, err := ioutil.ReadDir("./samples")
+	if err != nil {
+		panic(err)
+	}
+	for _, f := range files {
+		path := "samples/" + f.Name() + "/"
+		name := f.Name()
+		user, err := ioutil.ReadFile(path + "User")
+		if err != nil {
+			panic(err)
+		}
+		desc, err := ioutil.ReadFile(path + "Desc")
+		if err != nil {
+			panic(err)
+		}
+		programList = append(programList, Program{name, string(user), string(desc)})
+	}
+	renderTemplate(w, "library.html", map[string]interface{}{"programList": programList})
+}
+
 // Entry point of the program
 func main() {
 	// Sets up static directory serve
 	fs := http.FileServer(http.Dir("static/"))
+	ps := http.FileServer(http.Dir("samples/"))
 	// Sets up routes
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
+	http.Handle("/samples/", http.StripPrefix("/samples/", ps))
 	http.HandleFunc("/favicon.ico", iconHandler)
 	http.HandleFunc("/", makeHandler(interpretHandler, "/"))
 	http.HandleFunc("/about", makeHandler(aboutHandler, "/about"))
 	http.HandleFunc("/info", makeHandler(infoHandler, "/info"))
 	http.HandleFunc("/interpret", makeHandler(interpretHandler, "/interpret"))
+	http.HandleFunc("/library", makeHandler(libraryHandler, "/library"))
 	// Starts the server
 	port := os.Getenv("PORT")
 	if port == "" {

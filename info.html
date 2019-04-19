@@ -1,16 +1,18 @@
 {{define "content"}}
+<head>
+    <link rel="stylesheet" href="/static/css/base-css.css">
+</head>
 <header class="page-header">
     <h1>Go Info</h1>
     <div id="accordion">
         <div class="card">
-          <div class="card-header" id="headingOne">
+          <div class="card-header" id="headingOne" aria-expanded="true" >
             <h5 class="mb-0">
-              <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+              <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                 Introduction
               </button>
             </h5>
           </div>
-      
           <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
             <div class="card-body">
                 <p>
@@ -109,40 +111,6 @@
             </div>
           </div>
         </div>
-        <div class="card">
-          <div class="card-header" id="headingFour">
-            <h5 class="mb-0">
-              <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                Go Syntax Examples
-              </button>
-            </h5>
-          </div>
-          <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
-            <div class="card-body">
-              <p>
-                <ul>
-                  <li><a href="#" onclick="post('output')">Click here for an output sample!</a></li>
-                  <li><a href="#" onclick="post('if')">Click here for an if statement sample!</a></li>
-                  <li><a href="#" onclick="post('bst')">Click here for a binary search tree sample!</a></li>
-                </ul>
-              </p>
-            </div>
-          </div>
-        </div>
       </div>
 </header>
-<script type="text/javascript">
-  function post(program) {
-    let form = document.createElement("form");
-    form.setAttribute("method", "post");
-    form.setAttribute("action", '/interpret');
-    let hiddenField = document.createElement("input");
-    hiddenField.setAttribute("type", "hidden");
-    hiddenField.setAttribute("name", "sample");
-    hiddenField.setAttribute("value", program);
-    form.appendChild(hiddenField);
-    document.body.appendChild(form);
-    form.submit();
-  }
-</script>
 {{end}}
