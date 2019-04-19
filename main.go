@@ -57,7 +57,7 @@ func interpretHandler(w http.ResponseWriter, r *http.Request) {
 			program := []byte(r.FormValue("source"))
 			path := "samples/" + r.FormValue("filename")
 			os.Mkdir(path, 0)
-			ioutil.WriteFile(path + "/main.go", program, 0)
+			ioutil.WriteFile(path+"/main.go", program, 0)
 			log.Println("File Saved: " + path)
 			renderTemplate(w, "interpreter.html", map[string]interface{}{"Program": string(program)})
 		}
@@ -97,7 +97,8 @@ func infoHandler(w http.ResponseWriter, r *http.Request) {
 // Handles code library page
 func libraryHandler(w http.ResponseWriter, r *http.Request) {
 	log.Println("GET libary")
-	renderTemplate(w, "library.html", nil)
+	programList := []string{"if", "output", "bst"}
+	renderTemplate(w, "library.html", map[string]interface{}{"programList": programList})
 }
 
 // Entry point of the program
