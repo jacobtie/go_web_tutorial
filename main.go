@@ -52,6 +52,15 @@ func interpretHandler(w http.ResponseWriter, r *http.Request) {
 		log.Println("POST interpret")
 		// Parses data from form
 		r.ParseForm()
+		// Saves form entry to file
+		if r.FormValue("submit") == "Save" {
+			program := []byte(r.FormValue("source"))
+			path := "samples/" + r.FormValue("filename")
+			os.Mkdir(path, 0)
+			ioutil.WriteFile(path + "/main.go", program, 0)
+			log.Println("File Saved: " + path)
+			renderTemplate(w, "interpreter.html", map[string]interface{}{"Program": string(program)})
+		}
 		if r.FormValue("sample") == "" {
 			// Extracts source code
 			program := r.FormValue("source")
@@ -85,17 +94,26 @@ func infoHandler(w http.ResponseWriter, r *http.Request) {
 	renderTemplate(w, "info.html", nil)
 }
 
+// Handles code library page
+func libraryHandler(w http.ResponseWriter, r *http.Request) {
+	log.Println("GET libary")
+	renderTemplate(w, "library.html", nil)
+}
+
 // Entry point of the program
 func main() {
 	// Sets up static directory serve
 	fs := http.FileServer(http.Dir("static/"))
+	ps := http.FileServer(http.Dir("samples/"))
 	// Sets up routes
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
+	http.Handle("/samples/", http.StripPrefix("/samples/", ps))
 	http.HandleFunc("/favicon.ico", iconHandler)
 	http.HandleFunc("/", makeHandler(interpretHandler, "/"))
 	http.HandleFunc("/about", makeHandler(aboutHandler, "/about"))
 	http.HandleFunc("/info", makeHandler(infoHandler, "/info"))
 	http.HandleFunc("/interpret", makeHandler(interpretHandler, "/interpret"))
+	http.HandleFunc("/library", makeHandler(libraryHandler, "/library"))
 	// Starts the server
 	port := os.Getenv("PORT")
 	if port == "" {
