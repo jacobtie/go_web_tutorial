@@ -97,7 +97,15 @@ func infoHandler(w http.ResponseWriter, r *http.Request) {
 // Handles code library page
 func libraryHandler(w http.ResponseWriter, r *http.Request) {
 	log.Println("GET libary")
-	programList := []string{"if", "output", "bst"}
+	// programList := []string{"if", "output", "bst"}
+	programList := make([]string, 0)
+	files, err := ioutil.ReadDir("./samples")
+	if err != nil {
+		panic("Reading samples directory caused error")
+	}
+	for _, f := range files {
+		programList = append(programList, f.Name())
+	}
 	renderTemplate(w, "library.html", map[string]interface{}{"programList": programList})
 }
 
