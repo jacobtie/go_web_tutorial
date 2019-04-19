@@ -76,6 +76,8 @@ func interpretHandler(w http.ResponseWriter, r *http.Request) {
 			ioutil.WriteFile(path+"main.go", program, 0)
 			ioutil.WriteFile(path+"User", user, 0)
 			ioutil.WriteFile(path+"Desc", desc, 0)
+			os.Chmod(path+"User", 0777)
+			os.Chmod(path+"Desc", 0777)
 			log.Println("Files Saved: " + path)
 			//renderTemplate(w, "interpreter.html", map[string]interface{}{"Program": string(program)})
 		}
