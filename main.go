@@ -9,6 +9,13 @@ import (
 	"strings"
 )
 
+// Program holds a program's metadata for library
+type Program struct {
+	Name string
+	User string
+	Desc string
+}
+
 // Helper function to render template with base layout
 func renderTemplate(w http.ResponseWriter, filename string, data map[string]interface{}) {
 	t, _ := template.ParseFiles("base.html", filename)
@@ -53,10 +60,14 @@ func interpretHandler(w http.ResponseWriter, r *http.Request) {
 		// Saves form entry to file
 		if r.FormValue("submit") == "Save" {
 			program := []byte(r.FormValue("source"))
-			path := "samples/" + r.FormValue("filename")
+			path := "samples/" + r.FormValue("filename") + "/"
+			user := []byte(r.FormValue("user"))
+			desc := []byte(r.FormValue("desc"))
 			os.Mkdir(path, 0)
-			ioutil.WriteFile(path+"/main.go", program, 0)
-			log.Println("File Saved: " + path)
+			ioutil.WriteFile(path+"main.go", program, 0)
+			ioutil.WriteFile(path+"User", user, 0)
+			ioutil.WriteFile(path+"Desc", desc, 0)
+			log.Println("Files Saved: " + path)
 			renderTemplate(w, "interpreter.html", map[string]interface{}{"Program": string(program)})
 		}
 		if r.FormValue("sample") == "" {
@@ -95,13 +106,23 @@ func infoHandler(w http.ResponseWriter, r *http.Request) {
 // Handles code library page
 func libraryHandler(w http.ResponseWriter, r *http.Request) {
 	log.Println("GET libary")
-	programList := make([]string, 0)
+	programList := make([]Program, 0)
 	files, err := ioutil.ReadDir("./samples")
 	if err != nil {
-		panic("Reading samples directory caused error")
+		panic(err)
 	}
 	for _, f := range files {
-		programList = append(programList, f.Name())
+		path := "samples/" + f.Name() + "/"
+		name := f.Name()
+		user, err := ioutil.ReadFile(path + "User")
+		if err != nil {
+			panic(err)
+		}
+		desc, err := ioutil.ReadFile(path + "Desc")
+		if err != nil {
+			panic(err)
+		}
+		programList = append(programList, Program{name, string(user), string(desc)})
 	}
 	renderTemplate(w, "library.html", map[string]interface{}{"programList": programList})
 }
