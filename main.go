@@ -34,12 +34,6 @@ func makeHandler(fn func(http.ResponseWriter, *http.Request), route string) http
 	}
 }
 
-// Renders home page
-func mainHandler(w http.ResponseWriter, r *http.Request) {
-	log.Println("GET index")
-	renderTemplate(w, "index.html", nil)
-}
-
 // Renders about page
 func aboutHandler(w http.ResponseWriter, r *http.Request) {
 	log.Println("GET about")
