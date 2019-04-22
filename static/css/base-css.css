@@ -3,10 +3,6 @@ body {
     background-repeat: repeat;
 }
 
-#main-section {
-    overflow-y: scroll;
-}
-
 .gopher{
     display: block;
     float: right;
